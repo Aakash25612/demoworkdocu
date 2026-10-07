@@ -77,7 +77,7 @@ svg.i { width: 1em; height: 1em; flex: none; fill: currentColor; }
 .nav-in { display: flex; align-items: center; justify-content: space-between; gap: 18px; background: rgba(255,255,255,.93);
   backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.8); border-radius: 999px; padding: 10px 12px 10px 18px;
   box-shadow: 0 18px 40px -24px rgba(13, 58, 43, .55); }
-.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; flex: none; }
 .brand img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; border: 2px solid var(--green-800); background: #fff; flex: none; }
 .brand b { display: block; font: 400 1.22rem/1.1 var(--serif); color: var(--green-950); }
 .brand small { display: block; white-space: nowrap; font-size: .66rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
@@ -86,7 +86,7 @@ svg.i { width: 1em; height: 1em; flex: none; fill: currentColor; }
 .links a:hover, .links a.on { color: var(--green-800); }
 .nav-cta { display: flex; gap: 10px; }
 .menu-btn { display: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--green-900); cursor: pointer; }
-@media (max-width: 1080px) {
+@media (max-width: 1180px) {
   .menu-btn { display: grid; place-items: center; }
   .nav-cta .btn span { display: none; }
   .nav-cta .btn { padding: 11px 13px; }
@@ -96,7 +96,7 @@ svg.i { width: 1em; height: 1em; flex: none; fill: currentColor; }
   .links a { padding: 13px 0; border-bottom: 1px solid var(--line); }
   .links a:last-child { border-bottom: 0; }
 }
-@media (max-width: 520px) { .nav-cta { display: none; } .brand small { letter-spacing: .1em; } }
+@media (max-width: 520px) { .nav-cta { display: none; } .brand { flex: 0 1 auto; min-width: 0; } .brand small { letter-spacing: .1em; overflow: hidden; text-overflow: ellipsis; } }
 
 /* hero */
 .hero { position: relative; min-height: min(860px, 100svh); display: grid; align-items: center; color: #fff; text-align: center;
@@ -139,6 +139,7 @@ svg.i { width: 1em; height: 1em; flex: none; fill: currentColor; }
 /* photo slots: placeholder sits under the <img>; a missing file removes the img and leaves the placeholder */
 .ph { position: relative; overflow: hidden; border-radius: 20px; background: linear-gradient(135deg, #dbe9df, #eef4ef); aspect-ratio: 16 / 11; max-width: 100%; }
 .ph > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.room .ph > img { object-position: center 72%; }
 .ph .ph-label { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 8px; color: #6d8a79; font-size: .85rem; font-weight: 500; text-align: center; padding: 12px; }
 .ph .ph-label svg { width: 44px; height: 44px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 .badge { position: absolute; top: 14px; right: 14px; z-index: 1; background: var(--green-900); color: #fff; font-size: .82rem; font-weight: 600;
@@ -170,8 +171,8 @@ svg.i { width: 1em; height: 1em; flex: none; fill: currentColor; }
 @media (max-width: 900px) { .feat-grid { grid-template-columns: 1fr; } }
 
 /* gallery */
-.gal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
-.gal .ph { aspect-ratio: 4 / 2.9; border-radius: 22px; box-shadow: 0 18px 36px -28px rgba(13,58,43,.6); }
+.gal { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+.gal .ph { aspect-ratio: 3 / 4; border-radius: 22px; box-shadow: 0 18px 36px -28px rgba(13,58,43,.6); }
 .gal .ph > img { transition: transform .5s; }
 .gal .ph:hover > img { transform: scale(1.05); }
 @media (max-width: 760px) { .gal { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } }
@@ -346,9 +347,9 @@ footer .ci svg { color: var(--gold); margin-top: 5px; }
 </header>
 
 <main id="home">
-  <!-- HERO: drop a real photo at images/hero.jpg and it replaces the illustration automatically -->
+  <!-- HERO photo: images/campus.webp (the illustration shows if the file is missing) -->
   <section class="hero">
-    <div class="hero-bg"><img src="images/hero.jpg" alt="" onerror="this.remove()"></div>
+    <div class="hero-bg"><img src="images/campus.webp" alt="" fetchpriority="high" onerror="this.remove()"></div>
     <div class="wrap">
       <h1>Pure-Veg Friendly Stay in <span data-cfg="area">Your Area</span>, <span data-cfg="city">Your City</span></h1>
       <p class="lead">Comfortable and affordable accommodation near <span data-cfg="landmark">the main temple and market</span>. Clean AC &amp; Non-AC rooms, family rooms and budget dormitory beds for pilgrims, families and travelers from <span data-cfg="fromPrice">₹800</span>/night.</p>
@@ -385,7 +386,7 @@ footer .ci svg { color: var(--gold); margin-top: 5px; }
         <span class="divider"><i></i></span>
       </div>
       <div class="welcome">
-        <div class="ph illus"><img src="images/about.jpg" alt="Our building" onerror="this.onerror=null;this.src='building.png'"></div>
+        <div class="ph"><img src="images/room-double.webp" alt="Double room with wooden flooring" onerror="this.onerror=null;this.src='building.png';this.parentNode.classList.add('illus')"></div>
         <div class="welcome-text">
           <span class="pill">A peaceful stay in <span data-cfg="city">Your City</span></span>
           <h3>Rooted in Peace, Purity &amp; Warm Hospitality</h3>
@@ -418,7 +419,7 @@ footer .ci svg { color: var(--gold); margin-top: 5px; }
     </div>
   </section>
 
-  <!-- GALLERY: images/gallery-1.jpg ... gallery-6.jpg -->
+  <!-- GALLERY: photos listed in CONFIG.gallery -->
   <section class="band mint" id="gallery">
     <div class="wrap">
       <div class="sec-head">
@@ -569,8 +570,8 @@ footer .ci svg { color: var(--gold); margin-top: 5px; }
 <script>
 /* =====================================================================
    EDIT THIS BLOCK FOR THE CLIENT. Everything on the page updates from it.
-   Photos: put files in /images — hero.jpg, about.jpg, room-1.jpg … room-6.jpg,
-   gallery-1.jpg … gallery-6.jpg. Missing photos show a neat placeholder.
+   Photos live in /images. Point a room's "img" or a gallery entry at any file there;
+   a missing file shows a neat placeholder instead of a broken image.
    ===================================================================== */
 const CONFIG = {
   name: "Atithi Bhavan",
@@ -588,12 +589,18 @@ const CONFIG = {
   rating: "4.5",                      // your Google rating
   reviewCount: "Google",              // e.g. "210+ Google"
   rooms: [
-    { name: "Super Deluxe Room (AC)", price: 2800, tag: "Most Popular", desc: "Comfortable, cool and ideal for a relaxing stay in all seasons." },
-    { name: "Non-AC Room", price: 1800, tag: "Value Stay", desc: "A simple and peaceful stay option with all basic facilities." },
-    { name: "Super Deluxe Room", price: 2400, tag: "Spacious", desc: "Spacious, premium and designed for a comfortable guest experience." },
-    { name: "6 Beds AC Room", price: 3850, tag: "Families", desc: "Perfect for groups and families needing shared accommodation." },
-    { name: "AC Hall – Bed", price: 800, tag: "Groups", desc: "A large air-cooled hall suitable for group stays and gatherings." },
-    { name: "Dormitory – Bed", price: 800, tag: "Budget", desc: "Budget-friendly shared accommodation for travelers and groups." }
+    { name: "Super Deluxe Room (AC)", price: 2800, tag: "Most Popular", img: "images/room-ac.webp", desc: "Comfortable, cool and ideal for a relaxing stay in all seasons." },
+    { name: "Non-AC Room", price: 1800, tag: "Value Stay", img: "images/room-double.webp", desc: "A simple and peaceful stay option with all basic facilities." },
+    { name: "Super Deluxe Room", price: 2400, tag: "Spacious", img: "images/room-double.webp", desc: "Spacious, premium and designed for a comfortable guest experience." },
+    { name: "6 Beds AC Room", price: 3850, tag: "Families", img: "images/dormitory.webp", desc: "Perfect for groups and families needing shared accommodation." },
+    { name: "AC Hall – Bed", price: 800, tag: "Groups", img: "images/dormitory.webp", desc: "A large air-cooled hall suitable for group stays and gatherings." },
+    { name: "Dormitory – Bed", price: 800, tag: "Budget", img: "images/dormitory.webp", desc: "Budget-friendly shared accommodation for travelers and groups." }
+  ],
+  gallery: [
+    { src: "images/campus.webp", label: "Campus & garden" },
+    { src: "images/room-double.webp", label: "Double room" },
+    { src: "images/room-ac.webp", label: "AC room" },
+    { src: "images/dormitory.webp", label: "Dormitory" }
   ],
   // SAMPLE reviews for the demo only. Replace with real guest reviews before going live, then set reviewsAreSamples to false.
   reviewsAreSamples: true,
@@ -636,7 +643,7 @@ const slot = (src, label, alt) => '<span class="ph-label">' + camIcon + esc(labe
 $("#priceChips").innerHTML = CONFIG.rooms.map(r => '<span class="price-chip">' + esc(r.name) + '<b>' + rupee(r.price) + '/night</b></span>').join("");
 $("#footRooms").innerHTML = CONFIG.rooms.map(r => '<li><a href="#rooms">' + esc(r.name) + ' (' + rupee(r.price) + ')</a></li>').join("");
 $("#roomGrid").innerHTML = CONFIG.rooms.map((r, i) =>
-  '<article class="room"><div class="ph"><span class="badge">' + esc(r.tag) + '</span>' + slot("images/room-" + (i + 1) + ".jpg", "Add images/room-" + (i + 1) + ".jpg", r.name) + '</div>' +
+  '<article class="room"><div class="ph"><span class="badge">' + esc(r.tag) + '</span>' + slot(r.img || "", "Room photo", r.name) + '</div>' +
   '<div class="room-body"><h3>' + esc(r.name) + '</h3><p>' + esc(r.desc) + '</p>' +
   '<div class="room-foot"><span class="amt">' + rupee(r.price) + '<small>/night</small></span><span class="acts">' +
   '<a class="btn btn-line btn-sm" href="#faq"><svg class="i"><use href="#eye"/></svg>Details</a>' +
@@ -644,8 +651,7 @@ $("#roomGrid").innerHTML = CONFIG.rooms.map((r, i) =>
   '</span></div></div></article>').join("");
 
 // gallery
-const galLabels = ["Room", "Room interior", "Bathroom", "Family room", "Dormitory", "Building / entrance"];
-$("#gal").innerHTML = galLabels.map((l, i) => '<div class="ph">' + slot("images/gallery-" + (i + 1) + ".jpg", l + " photo", l) + '</div>').join("");
+$("#gal").innerHTML = CONFIG.gallery.map(g => '<div class="ph">' + slot(g.src, g.label, g.label) + '</div>').join("");
 
 // reviews carousel
 const starStr = n => "★".repeat(Math.floor(n)) + "☆".repeat(5 - Math.floor(n));
